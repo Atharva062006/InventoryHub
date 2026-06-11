@@ -12,5 +12,4 @@ export const healthCheck = async (req, res) => {
             status: "ERROR"
         });
     }
-    
 }
