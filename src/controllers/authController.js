@@ -36,3 +36,8 @@ export const loginUser = async (req, res) => {
         return handleResponse(res, statusCode, error.message);
     }
 };
+
+// Current user
+export const getMe = async(req, res) => {
+    handleResponse(res, 200, "User data retrieved", req.user);
+}
