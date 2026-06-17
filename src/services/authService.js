@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 
 import { createUser, findUserByEmail } from "../repositories/userRepository.js";
+import { generateToken } from "../util/jwtUtil.js";
 
 // Register user
 export const registerUserSerice = async ({name, email, password}) => {
@@ -19,7 +20,8 @@ export const registerUserSerice = async ({name, email, password}) => {
 export const loginUserService = async ({email, password}) => {
     const user = await findUserByEmail(email);
     if(user && await(bcrypt.compare(password, user.password_hash))) {
-        return user;
+        const accessToken = await generateToken(user);
+        return {user, accessToken};
     }
     else {
         throw new Error("Incorrect credentials");
