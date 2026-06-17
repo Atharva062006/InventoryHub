@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import handleResponse from "../util/handleResponse.js";
 
 dotenv.config();
 
@@ -10,8 +11,7 @@ export const verifyToken = async(req, res, next) => {
         token = authHeader.split(" ")[1];
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if(err) {
-                res.status(401);
-                throw new Error("User not authorized");
+                return handleResponse(res, 401, "Invalid token");
             }
             req.user = decoded.user;
             next();
@@ -19,7 +19,6 @@ export const verifyToken = async(req, res, next) => {
     }
 
     if(!token) {
-        res.status(401);
-        throw new Error("User is not authorized or token is missing");
+        return handleResponse(res, 401, "No token provided");
     }
 };

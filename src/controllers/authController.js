@@ -1,5 +1,5 @@
 import handleResponse from "../util/handleResponse.js";
-import { registerUserSerice, loginUserService } from "../services/authService.js";
+import { registerUserService, loginUserService } from "../services/authService.js";
 
 // Register user
 export const registerUser = async (req, res) => {
@@ -8,13 +8,14 @@ export const registerUser = async (req, res) => {
     }
 
     try {
-        const user = await registerUserSerice(req.body);
+        const user = await registerUserService(req.body);
 
         delete user.password_hash; 
         
         handleResponse(res, 201, "User registered successfully", user);
     }catch (error) {
-        return handleResponse(res, 500, error.message);
+        const statusCode = error.message === "Email already in use" ? 409 : 500;
+        return handleResponse(res, statusCode, error.message);
     }
     
 };

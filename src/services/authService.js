@@ -4,7 +4,7 @@ import { createUser, findUserByEmail } from "../repositories/userRepository.js";
 import { generateToken } from "../util/jwtUtil.js";
 
 // Register user
-export const registerUserSerice = async ({name, email, password}) => {
+export const registerUserService = async ({name, email, password}) => {
     
     if (await findUserByEmail(email)) {
         throw new Error("Email already in use");
