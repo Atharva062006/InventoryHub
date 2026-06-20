@@ -1,8 +1,9 @@
 import cors from "cors";
 import express from "express";
 
-import healthRoutes from "./routes/healthRoutes.js"
-import authRoutes from "./routes/authRoutes.js"
+import healthRouter from "./routes/healthRoutes.js"
+import authRouter from "./routes/authRoutes.js"
+import categoryRouter from "./routes/caetgoryRoutes.js";
 
 const app = express();
 
@@ -11,8 +12,9 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/health", healthRoutes);
-app.use("/api/v1/auth", authRoutes);
+app.use("/health", healthRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/category", categoryRouter);
 
 // Error handling middleware
 
