@@ -3,7 +3,7 @@ import express from "express";
 
 import healthRouter from "./routes/healthRoutes.js"
 import authRouter from "./routes/authRoutes.js"
-import categoryRouter from "./routes/caetgoryRoutes.js";
+import categoryRouter from "./routes/categoryRoutes.js";
 
 const app = express();
 

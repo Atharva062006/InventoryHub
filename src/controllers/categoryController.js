@@ -1,18 +1,20 @@
+import { createCategoryService } from "../services/categoryService.js";
 import handleResponse from "../util/handleResponse.js";
 
 export const createCategory = async(req, res) => {
     const {name} = req.body;
 
     if(!name) {
-        handleResponse(res, 400, "Category name is required");
+        return handleResponse(res, 400, "Category name is required");
     }
 
     try {
         const category = await createCategoryService(name);
 
-        handleResponse(res, 201, "Category created successfully", category);
+        return handleResponse(res, 201, "Category created successfully", category);
     }
-    catch(err) {
-        return handleResponse(res, 500, "Internal Server Error");
+    catch(error) {
+        const statusCode = error.message === "Category already exists" ? 409 : 500;
+        return handleResponse(res, statusCode, error.message);
     }
 }
