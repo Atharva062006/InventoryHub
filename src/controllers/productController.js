@@ -65,6 +65,7 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     const {id} = req.params;
+    
     try {
         await deleteProductService(id);
         return handleResponse(res, 200, "Product deleted successfully");
