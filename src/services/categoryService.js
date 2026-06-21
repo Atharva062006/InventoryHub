@@ -9,7 +9,14 @@ import {
 
 export const createCategoryService = async (name) => {
     
-    if(await getCategoryByName(name)) {
+    const trimmedName = name.trim();
+    if(!trimmedName) {
+        throw new Error("Category name cannot be empty");
+    }
+
+    const existingCategory = await getCategoryByName(trimmedName);
+
+    if(existingCategory) {
         throw new Error("Category already exists");
     }
     

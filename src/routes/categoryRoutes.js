@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 import { 
     createCategory,
@@ -10,10 +11,10 @@ import {
 
 const categoryRouter = Router();
 
-categoryRouter.post("/", createCategory);
-categoryRouter.get("/", getAllCategories);
-categoryRouter.get("/:id", getCategoryById);
-categoryRouter.put("/:id", updateCategory);
-categoryRouter.delete("/:id", deleteCategory);
+categoryRouter.post("/", verifyToken, createCategory);
+categoryRouter.get("/", verifyToken, getAllCategories);
+categoryRouter.get("/:id", verifyToken, getCategoryById);
+categoryRouter.put("/:id", verifyToken, updateCategory);
+categoryRouter.delete("/:id", verifyToken, deleteCategory);
 
 export default categoryRouter;

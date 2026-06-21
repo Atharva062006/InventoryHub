@@ -6,7 +6,7 @@ export const createCategory = async (name) => {
 }
 
 export const getAllCategories = async () => {
-    const result = await pool.query("SELECT * from categories");
+    const result = await pool.query("SELECT * FROM categories");
     return result.rows;
 }
 

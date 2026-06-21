@@ -6,9 +6,7 @@ dotenv.config();
 export const generateToken = (user) => {
     const accessToken = jwt.sign({
         user: {
-            id: user.user_id,
-            name: user.name,
-            email: user.email,
+            id: user.user_id
         }
     },
         process.env.JWT_SECRET,
