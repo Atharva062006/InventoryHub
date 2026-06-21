@@ -5,13 +5,18 @@ import { verifyToken } from "../middlewares/authMiddleware.js";
 import {
     createProduct,
     getAllProducts,
-    getProductById
+    getProductById,
+    updateProduct,
+    deleteProduct
 } from "../controllers/productController.js";
 
 const productRouter = Router();
 
-productRouter.post("/", verifyToken, createProduct);
-productRouter.get("/", verifyToken, getAllProducts);
-productRouter.get("/:id", verifyToken, getProductById);
+productRouter.use(verifyToken);
+productRouter.post("/", createProduct);
+productRouter.get("/", getAllProducts);
+productRouter.get("/:id", getProductById);
+productRouter.put("/:id", updateProduct);
+productRouter.delete("/:id", deleteProduct);
 
 export default productRouter;

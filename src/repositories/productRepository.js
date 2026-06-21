@@ -20,3 +20,13 @@ export const getProductByName = async (name) => {
     const result = await pool.query("SELECT * FROM products WHERE LOWER(name) = LOWER($1)", [name]);
     return result.rows[0];
 }
+
+export const updateProduct = async (id, name, stock_quantity, price, category_id) => {
+    const result = await pool.query("UPDATE products SET name = $1, stock_quantity = $2, price = $3, category_id = $4 WHERE product_id = $5 RETURNING *", 
+        [name, stock_quantity, price, category_id, id]);
+    return result.rows[0];
+}
+
+export const deleteProduct = async (id) => {
+    await pool.query("DELETE FROM products WHERE product_id = $1", [id]);
+}
