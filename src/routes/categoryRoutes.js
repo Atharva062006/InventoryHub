@@ -11,10 +11,11 @@ import {
 
 const categoryRouter = Router();
 
-categoryRouter.post("/", verifyToken, createCategory);
-categoryRouter.get("/", verifyToken, getAllCategories);
-categoryRouter.get("/:id", verifyToken, getCategoryById);
-categoryRouter.put("/:id", verifyToken, updateCategory);
-categoryRouter.delete("/:id", verifyToken, deleteCategory);
+categoryRouter.use(verifyToken);
+categoryRouter.post("/", createCategory);
+categoryRouter.get("/", getAllCategories);
+categoryRouter.get("/:id", getCategoryById);
+categoryRouter.put("/:id", updateCategory);
+categoryRouter.delete("/:id", deleteCategory);
 
 export default categoryRouter;

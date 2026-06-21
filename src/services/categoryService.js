@@ -20,7 +20,7 @@ export const createCategoryService = async (name) => {
         throw new Error("Category already exists");
     }
     
-    const category = await createCategory(name);
+    const category = await createCategory(trimmedName);
     return category;
 }
 
@@ -49,11 +49,17 @@ export const updateCategoryService = async (id, name) => {
     const category = await getCategoryById(id);
     if(!category) {
         throw new Error("Category not found");
-    }   
-    if(await getCategoryByName(name)) {
+    }
+    const trimmedName = name.trim();
+    if(!trimmedName) {
+        throw new Error("Category name cannot be empty");
+    }
+    const existingCategory = await getCategoryByName(trimmedName);
+
+    if(existingCategory && existingCategory.category_id !== Number(id)) {
         throw new Error("Category already exists");
     }
-    const updatedCategory = await updateCategory(id, name);
+    const updatedCategory = await updateCategory(id, trimmedName);
     return updatedCategory;
 }
 
