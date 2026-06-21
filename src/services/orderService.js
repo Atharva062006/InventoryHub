@@ -53,3 +53,25 @@ export const createOrderService = async (user_id, items) => {
 
     return order;
 }
+
+export const getOrdersByUserService = async (user_id) => {
+    const orders = await getOrdersByUserId(user_id);
+
+    for (const order of orders) {
+        const items = await getOrderItems(order.order_id);
+        order.items = items;
+    }
+
+    return orders;
+}
+
+export const getOrderByIdService = async (order_id) => {
+    const order = await getOrderById(order_id);
+    if (!order) {
+        throw new Error("Order not found");
+    }
+
+    const items = await getOrderItems(order.order_id);
+    order.items = items;
+    return order;
+}
