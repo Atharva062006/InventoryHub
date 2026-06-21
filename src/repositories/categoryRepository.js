@@ -19,3 +19,12 @@ export const getCategoryByName = async (name) => {
     const result = await pool.query("SELECT * FROM categories WHERE name = $1", [name]);
     return result.rows[0];
 }
+
+export const updateCategory = async (id, name) => {
+    const result = await pool.query("UPDATE categories SET name = $1 WHERE category_id = $2 RETURNING *", [name, id]);
+    return result.rows[0];
+}
+
+export const deleteCategory = async (id) => {
+    await pool.query("DELETE FROM categories WHERE category_id = $1", [id]);
+}
