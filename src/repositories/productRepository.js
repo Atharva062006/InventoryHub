@@ -27,6 +27,12 @@ export const updateProduct = async (id, name, stock_quantity, price, category_id
     return result.rows[0];
 }
 
+export const updateProductStock = async (id, newStock) => {
+    const result = await pool.query("UPDATE products SET stock_quantity = $1 WHERE product_id = $2 RETURNING *", 
+        [newStock, id]);
+    return result.rows[0];
+}
+
 export const deleteProduct = async (id) => {
     await pool.query("DELETE FROM products WHERE product_id = $1", [id]);
 }
