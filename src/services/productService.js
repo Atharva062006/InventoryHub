@@ -2,7 +2,7 @@ import {
     createProduct,
     getAllProducts,
     getProductById,
-    getProductsByName
+    getProductByName
 } from "../repositories/productRepository.js";
 
 import { getCategoryById } from "../repositories/categoryRepository.js";
@@ -14,7 +14,7 @@ export const createProductService = async (name, stock_quantity, price, category
     if(stock_quantity < 0) {
         throw new Error("Stock quantity cannot be negative");
     }
-    if(price < 0) {
+    if(price <= 0) {
         throw new Error("Price cannot be negative");
     }
     if(!await getCategoryById(category_id)) {
@@ -27,5 +27,18 @@ export const createProductService = async (name, stock_quantity, price, category
     }
 
     const product = await createProduct(name.trim(), stock_quantity, price, category_id);
+    return product;
+}
+
+export const getAllProductsService = async () => {
+    const products = await getAllProducts();
+    return products;
+}
+
+export const getProductByIdService = async (id) => {
+    const product = await getProductById(id);
+    if(!product) {
+        throw new Error("Product not found");
+    }
     return product;
 }

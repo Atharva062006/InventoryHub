@@ -16,7 +16,7 @@ export const getProductById = async (id) => {
     return result.rows[0];
 }
 
-export const getProductsByName = async (name) => {
-    const result = await pool.query("SELECT * FROM products WHERE name ILIKE $1", [`%${name}%`]);
-    return result.rows;
+export const getProductByName = async (name) => {
+    const result = await pool.query("SELECT * FROM products WHERE LOWER(name) = LOWER($1)", [name]);
+    return result.rows[0];
 }
