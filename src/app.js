@@ -1,17 +1,22 @@
 import cors from "cors";
 import express from "express";
+import swaggerUi from "swagger-ui-express";
 
 import healthRouter from "./routes/healthRoutes.js"
 import authRouter from "./routes/authRoutes.js"
 import categoryRouter from "./routes/categoryRoutes.js";
 import productRouter from "./routes/productRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
+import { swaggerSpec } from "./config/swagger.js";
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// API docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use("/health", healthRouter);

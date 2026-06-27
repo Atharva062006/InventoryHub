@@ -25,8 +25,9 @@ export const getOrders = async (req, res) => {
 
 export const getOrderById = async (req, res) => {
     const { id } = req.params;
+    const user_id = req.user.id;
     try {
-        const order = await getOrderByIdService(id);
+        const order = await getOrderByIdService(id, user_id);
         return handleResponse(res, 200, "Order retrieved successfully", order);
     } catch (error) {
         const statusCode = error.message === "Order not found" ? 404 : 500;

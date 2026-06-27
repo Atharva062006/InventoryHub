@@ -65,10 +65,14 @@ export const getOrdersByUserService = async (user_id) => {
     return orders;
 }
 
-export const getOrderByIdService = async (order_id) => {
+export const getOrderByIdService = async (order_id, user_id) => {
     const order = await getOrderById(order_id);
     if (!order) {
         throw new Error("Order not found");
+    }
+
+    if(order.user_id !== user_id) {
+        throw new Error("Unauthorized access");
     }
 
     const items = await getOrderItems(order.order_id);
